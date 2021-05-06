@@ -36,7 +36,7 @@ public class vigener extends JDialog {
 
     public static void checkKey() throws keyException {
 
-        Pattern taboo = Pattern.compile("[a-z0-9]");
+        Pattern taboo = Pattern.compile("[a-z0-9\\p{Punct} №]");
         Matcher matcher = taboo.matcher(key);
 
         if (matcher.find()){
@@ -45,7 +45,7 @@ public class vigener extends JDialog {
     }
 
     public void getKey(){
-        key = textArea3.getText();
+        key =  textArea3.getText().toLowerCase(Locale.ROOT);
     }
 
     public ArrayList<Character> makeKeyString(){
@@ -60,6 +60,7 @@ public class vigener extends JDialog {
         return inputText.toLowerCase(Locale.ROOT)
                 .replace("ё", "е")
                 .replaceAll("[^а-я]", "");
+
     }
 
     public static int gcd(int a, int b) {
@@ -226,6 +227,7 @@ public class vigener extends JDialog {
             textArea2.setText(encrypt());
         }catch (keyException e){
             JOptionPane.showMessageDialog(null, "Ключ может быть только из русских букв!");
+            textArea2.setText("");
             textArea3.setText("");
             key = "";
         }
@@ -239,6 +241,7 @@ public class vigener extends JDialog {
             textArea2.setText(decrypt());
         }catch (keyException e){
             JOptionPane.showMessageDialog(null, "Ключ может быть только из русских букв!");
+            textArea2.setText("");
             textArea3.setText("");
             key = "";
         }
